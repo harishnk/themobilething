@@ -1,9 +1,9 @@
 module.exports.Credentials = {
-    sid: 'AC3b723c31db8d97180127711305f40755',
+    sid:       'AC3b723c31db8d97180127711305f40755',
     authToken: 'f04fefd0272893b7ad0d664ec00d5737',
     incoming: '+16468074202',
     outgoing: '+16468074202',
-    hostname: 'http://themobilething.harishnk.c9.io'
+    hostname: 'themobilething.harishnk.c9.io'
 };
 
 module.exports.dbcon = {
