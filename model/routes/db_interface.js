@@ -1,6 +1,6 @@
 var mongodb = require('mongodb');
-var url = require('url');
-var log = console.log;
+//var url = require('url');
+//var log = console.log;
 var dbcon = require('../secrets').dbcon;
 var mongohq_url = dbcon.mongohq_url;
  
@@ -23,46 +23,27 @@ exports.handle_post = function(req, res){
   console.log(body);
 
   
-  var connectionUri = url.parse(mongohq_url);
-  var dbName = connectionUri.pathname.replace(/^\//, '');
+//  var connectionUri = url.parse(mongohq_url);
+ // var dbName = connectionUri.pathname.replace(/^\//, '');
   
   mongodb.Db.connect(mongohq_url, function(error, client) {
   if (error) throw error;
 
-  client.collectionNames(function(error, names){
-    if(error) throw error;
-// output all collection names
-    log("Collections");
-    log("===========");
-    var lastCollection = null;
-    names.forEach(function(colData){
-      var colName = colData.name.replace(dbName + ".", '');
-      log(colName);
-      lastCollection = colName;
-    });
+    var collection = new mongodb.Collection(client, 'sms_logs');
 
-    var collection = new mongodb.Collection(client, lastCollection);
-    log("\nDocuments in " + lastCollection);
-    var documents = collection.find({}, {limit:5});
+    var document = {_system:"Demo", _SmsMessageSid:req.param('SmsMessageSid'), _twilioid:req.param('AccountSid'), _from_num:req.param('From'), 
+                    _to_num:req.param('To'), _message:body};
 
-    // output a count of all documents found
-    documents.count(function(error, count){
-      log("  " + count + " documents(s) found");
-      log("====================");
-
-      // output the first 5 documents
-      documents.toArray(function(error, docs) {
-        if(error) throw error;
-
-        docs.forEach(function(doc){
-          log(doc);
-        });
+   collection.insert(document, {safe: true}, function(error, records){
+   if (error) throw error;
+   console.log("record has been added as "+records[0]._id);   
+   });
       
         // close the connection
-        client.close();
-      });
+    client.close();
     });
-  });        
-  });  
+  //  });
+  //});        
+  //});  
 
 };
