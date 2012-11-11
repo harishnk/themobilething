@@ -1,0 +1,2 @@
+{"ts":1352607430700,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1352607433688,"patch":[[{"diffs":[[1,"var server = require(\"../model/Send/serve.js\");\r\nvar textmsg = [];\r\ntextmsg.push(\"+13175094202\", \"damn this is cool\");\r\nserver.serve(textmsg);"]],"start1":0,"start2":0,"length1":0,"length2":142}]],"length":142,"saved":false}
